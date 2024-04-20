@@ -1,0 +1,44 @@
+{
+  "name": "anycast_detector",
+  "version": "1.0.0",
+  "description": "Detect if the provided ip type is anycast",
+  "main": "dist/index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "format": "prettier -w 'src/**/*.ts'",
+    "lint": "eslint --fix 'src/**/*.ts'",
+    "dev": "NODE_ENV=DEVELOPMENT nodemon src/index.ts",
+    "build": "tsc",
+    "start": "NODE_ENV=PRODUCTION node dist/index.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/AA-Hamza/anycast_detector.git"
+  },
+  "keywords": [
+    "anycast",
+    "ip",
+    "detector"
+  ],
+  "author": "Ahmed Anwar",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/AA-Hamza/anycast_detector/issues"
+  },
+  "homepage": "https://github.com/AA-Hamza/anycast_detector#readme",
+  "dependencies": {
+    "express": "^4.19.2",
+    "node-cache": "^5.1.2"
+  },
+  "devDependencies": {
+    "@tsconfig/node20": "^20.1.4",
+    "@types/express": "^4.17.21",
+    "@types/node": "^20.12.7",
+    "@typescript-eslint/eslint-plugin": "^7.7.0",
+    "@typescript-eslint/parser": "^7.7.0",
+    "eslint": "^8.57.0",
+    "eslint-config-prettier": "^9.1.0",
+    "nodemon": "^3.1.0",
+    "typescript": "^5.4.5"
+  }
+}
