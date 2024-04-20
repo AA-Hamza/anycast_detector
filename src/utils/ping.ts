@@ -34,11 +34,13 @@ function getElapsedTime(startAt: [number, number]): string {
   return ms.toFixed(3);
 }
 
-async function ping(options: {
+type PingOptions = {
   host: string;
-  port: number;
-  timeout: number;
-}): Promise<{
+  port?: number;
+  timeout?: number;
+};
+
+async function ping(options: PingOptions): Promise<{
   host: string;
   port: number;
   success: boolean;
@@ -81,4 +83,25 @@ async function ping(options: {
   });
 }
 
-export { ping };
+async function pingAveraged(
+  options: PingOptions,
+  numberOfTries: number = 3,
+): Promise<number | undefined> {
+  const promisesArray: ReturnType<typeof ping>[] = [];
+  for (let i = 0; i < numberOfTries; i++) {
+    promisesArray.push(ping(options));
+  }
+
+  const results = await Promise.all(promisesArray);
+  let sum = 0;
+  for (let i = 0; i < numberOfTries; i++) {
+    const resultFreezed = Object.freeze(results[i]);
+    if (!resultFreezed.success || !resultFreezed.time) {
+      return undefined;
+    }
+    sum += parseFloat(resultFreezed.time);
+  }
+  return sum / numberOfTries;
+}
+
+export { ping, pingAveraged };

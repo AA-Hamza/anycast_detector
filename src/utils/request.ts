@@ -1,7 +1,7 @@
 import http from "http";
 
 async function getHttp(options: {
-  url: string;
+  url: string | URL;
   timeout: number;
 }): Promise<{ success: boolean; statusCode: number; data?: object }> {
   const p = new Promise((resolve, reject) => {
@@ -39,8 +39,7 @@ async function getHttp(options: {
       });
   });
 
-  const x = await p;
-  return x as Awaited<ReturnType<typeof getHttp>>;
+  return (await p) as Awaited<ReturnType<typeof getHttp>>;
 }
 
 export { getHttp };
