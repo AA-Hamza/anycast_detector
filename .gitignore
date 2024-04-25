@@ -1,3 +1,4 @@
 logs
 .npmrc
 node_modules/
+.env

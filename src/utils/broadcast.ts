@@ -7,10 +7,7 @@ async function broadCast(destinationIp: string): Promise<
     result: ReturnType<typeof getHttp>;
   }[]
 > {
-  // const promisesArray: {
-  //   server: string | URL;
-  //   result: ReturnType<typeof getHttp>;
-  // }[] = [];
+  console.log("boradcasting to: ", destinationIp);
   const promisesArray: Awaited<ReturnType<typeof broadCast>> = [];
 
   for (const server of AppConfig.serversListString) {
@@ -21,6 +18,9 @@ async function broadCast(destinationIp: string): Promise<
       server: server,
       result: getHttp({
         url: url,
+        headers: {
+          "x-api-key": AppConfig.internalApiKey,
+        },
         timeout: 15000,
       }),
     });

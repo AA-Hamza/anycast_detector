@@ -1,0 +1,19 @@
+meta {
+  name: ping
+  type: http
+  seq: 2
+}
+
+get {
+  url: http://localhost:3000/v1/api/internal/ping?dest=172.217.18.238
+  body: none
+  auth: none
+}
+
+query {
+  dest: 172.217.18.238
+}
+
+headers {
+  x-api-key: test
+}

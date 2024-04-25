@@ -9,7 +9,7 @@ async function secureEndpointMiddleware(
   if (AppConfig.internalApiKey != req.header("x-api-key")) {
     return res.status(401).json({ err: "unauthorized" });
   } else {
-    next(res);
+    return next();
   }
 }
 

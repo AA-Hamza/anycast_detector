@@ -1,0 +1,9 @@
+{
+  "version": "1",
+  "name": "anycast_detector",
+  "type": "collection",
+  "ignore": [
+    "node_modules",
+    ".git"
+  ]
+}

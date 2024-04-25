@@ -6,7 +6,9 @@ async function getPingController(req: Request, res: Response) {
     return res.status(400).json({ err: "expected query dest to be defined" });
   }
   const dest = req.query["dest"].toString();
+  console.log("dest", dest);
   const avg = await pingAveraged({ host: dest });
+  console.log("avg", avg);
   if (avg) {
     return res.status(200).json({
       success: true,
