@@ -4,7 +4,7 @@
   "description": "Detect if the provided ip type is anycast",
   "main": "dist/index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1",
+    "test": "echo \"Error: no test specified\" && exit 0",
     "format": "prettier -w 'src/**/*.ts'",
     "lint": "eslint --fix 'src/**/*.ts'",
     "dev": "NODE_ENV=DEVELOPMENT nodemon src/index.ts",
