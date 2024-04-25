@@ -1,0 +1,24 @@
+service: anycast-detector
+
+provider:
+  name: azure
+  runtime: nodejs18
+  location: France Central
+
+plugins:
+  - serverless-azure-functions
+
+package:
+  exclude:
+    - node_modules/**
+    - .gitignore
+    - package.json
+    - .git/**
+
+functions:
+  app:
+    handler: src/index
+    events:
+      - http: true
+        x-azure-settings:
+          authLevel: anonymous
