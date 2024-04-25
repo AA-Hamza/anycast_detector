@@ -2,3 +2,4 @@ logs
 .npmrc
 node_modules/
 .env
+dist/
