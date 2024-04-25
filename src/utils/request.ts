@@ -5,8 +5,8 @@ async function getHttp(options: {
   headers?: Record<string, string>;
   timeout: number;
 }): Promise<{ success: boolean; statusCode: number; data?: object }> {
-  console.log("getHttp: ", JSON.stringify(options, undefined, "\t"));
-  const p = new Promise((resolve, reject) => {
+  console.log("sending getHttp:", JSON.stringify(options));
+  const p = new Promise((resolve) => {
     http
       .get(
         options.url,
@@ -20,6 +20,11 @@ async function getHttp(options: {
             if (res.statusCode === 200) {
               try {
                 const json = JSON.parse(data);
+                console.log(
+                  "result getHttp:",
+                  JSON.stringify(options),
+                  JSON.stringify({ json }),
+                );
                 return resolve({ success: true, statusCode: 200, data: json });
               } catch (e) {
                 console.log("Error parsing JSON!");
@@ -27,7 +32,7 @@ async function getHttp(options: {
               }
             } else {
               console.log("Status:", res.statusCode);
-              return reject({
+              return resolve({
                 success: false,
                 statusCode: res.statusCode,
                 data: { err: data },
@@ -38,7 +43,7 @@ async function getHttp(options: {
       )
       .on("error", function(err) {
         console.log("Error:", err);
-        return reject({
+        return resolve({
           success: false,
           statusCode: 0,
         });

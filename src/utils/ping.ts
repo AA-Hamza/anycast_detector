@@ -87,21 +87,26 @@ async function pingAveraged(
   options: PingOptions,
   numberOfTries: number = 3,
 ): Promise<number | undefined> {
-  const promisesArray: ReturnType<typeof ping>[] = [];
-  for (let i = 0; i < numberOfTries; i++) {
-    promisesArray.push(ping(options));
-  }
-
-  const results = await Promise.all(promisesArray);
-  let sum = 0;
-  for (let i = 0; i < numberOfTries; i++) {
-    const resultFreezed = Object.freeze(results[i]);
-    if (!resultFreezed.success || !resultFreezed.time) {
-      return undefined;
+  try {
+    const promisesArray: ReturnType<typeof ping>[] = [];
+    for (let i = 0; i < numberOfTries; i++) {
+      promisesArray.push(ping(options));
     }
-    sum += parseFloat(resultFreezed.time);
+
+    const results = await Promise.all(promisesArray);
+    let sum = 0;
+    for (let i = 0; i < numberOfTries; i++) {
+      const resultFreezed = Object.freeze(results[i]);
+      if (!resultFreezed.success || !resultFreezed.time) {
+        return undefined;
+      }
+      sum += parseFloat(resultFreezed.time);
+    }
+    return sum / numberOfTries;
+  } catch (err) {
+    console.log("pingAveraged err:", err);
+    return undefined;
   }
-  return sum / numberOfTries;
 }
 
 export { ping, pingAveraged };

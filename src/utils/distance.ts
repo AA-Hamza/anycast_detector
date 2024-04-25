@@ -50,9 +50,10 @@ async function getTheorticalLatencyToServer(
     otherGeoLocation,
   );
 
-  const latencyInSeconds = distanceInKm / SPEED_OF_LIGHT_IN_KM_PER_SECOND;
+  const latencyInMilliSeconds =
+    (distanceInKm / SPEED_OF_LIGHT_IN_KM_PER_SECOND) * 1000;
 
-  return latencyInSeconds;
+  return latencyInMilliSeconds * 2; // x2 because of RTT
 }
 
 export { getTheorticalLatencyToServer };

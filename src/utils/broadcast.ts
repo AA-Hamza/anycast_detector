@@ -1,7 +1,10 @@
 import { AppConfig } from "..";
 import { getHttp } from "./request";
 
-async function broadCast(destinationIp: string): Promise<
+async function broadCast(
+  destinationIp: string,
+  port: number = 80,
+): Promise<
   {
     server: string | URL;
     result: ReturnType<typeof getHttp>;
@@ -13,7 +16,7 @@ async function broadCast(destinationIp: string): Promise<
   for (const server of AppConfig.serversListString) {
     const url = new URL(server);
     url.pathname = "/v1/api/internal/ping";
-    url.search = "dest=" + destinationIp;
+    url.search = `dest=${destinationIp}&port=${port}`;
     promisesArray.push({
       server: server,
       result: getHttp({
