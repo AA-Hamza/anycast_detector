@@ -1,5 +1,8 @@
 logs
 .npmrc
-node_modules/
+node_modules*/
 .env
 dist/
+env.serverless.*
+.serverless
+

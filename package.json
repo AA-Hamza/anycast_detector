@@ -9,7 +9,12 @@
     "lint": "eslint --fix 'src/**/*.ts'",
     "dev": "NODE_ENV=DEVELOPMENT nodemon src/index.ts",
     "build": "tsc",
-    "start": "NODE_ENV=PRODUCTION node dist/index.js"
+    "start": "NODE_ENV=PRODUCTION node dist/index.js",
+    "pre-deploy": "npm run build && mv node_modules node_modules_bak && npm install --omit=dev",
+    "deploy": "npm run pre-deploy && serverless deploy --region eu-central-1 && serverless deploy --region us-west-1 && npm run post-deploy",
+    "post-deploy": "rm -r node_modules && mv node_modules_bak node_modules",
+    "deploy:eu": "npm run pre-deploy && serverless deploy --region eu-central-1 && npm run post-deploy",
+    "deploy:us": "npm run pre-deploy && serverless deploy --region us-west-1 && npm run post-deploy"
   },
   "repository": {
     "type": "git",

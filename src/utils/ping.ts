@@ -83,30 +83,55 @@ async function ping(options: PingOptions): Promise<{
   });
 }
 
-async function pingAveraged(
+// async function pingLowest(
+//   options: PingOptions,
+//   numberOfTries: number = 5,
+// ): Promise<number | undefined> {
+//   try {
+//     const promisesArray: ReturnType<typeof ping>[] = [];
+//     for (let i = 0; i < numberOfTries; i++) {
+//       promisesArray.push(ping(options));
+//     }
+//
+//     const results = await Promise.all(promisesArray);
+//     let lowest = Infinity;
+//     for (let i = 0; i < numberOfTries; i++) {
+//       const resultFreezed = Object.freeze(results[i]);
+//       if (!resultFreezed.success || !resultFreezed.time) {
+//         return undefined;
+//       }
+//       const time = parseFloat(resultFreezed.time);
+//       if (time < lowest) {
+//         lowest = time;
+//       }
+//     }
+//     return lowest;
+//   } catch (err) {
+//     console.log("pingLowest err:", err);
+//     return undefined;
+//   }
+// }
+async function pingLowest(
   options: PingOptions,
   numberOfTries: number = 3,
 ): Promise<number | undefined> {
   try {
-    const promisesArray: ReturnType<typeof ping>[] = [];
+    let lowest = Infinity;
     for (let i = 0; i < numberOfTries; i++) {
-      promisesArray.push(ping(options));
-    }
-
-    const results = await Promise.all(promisesArray);
-    let sum = 0;
-    for (let i = 0; i < numberOfTries; i++) {
-      const resultFreezed = Object.freeze(results[i]);
-      if (!resultFreezed.success || !resultFreezed.time) {
+      const result = await ping(options);
+      if (!result.success || !result.time) {
         return undefined;
       }
-      sum += parseFloat(resultFreezed.time);
+      const time = parseFloat(result.time);
+      if (time < lowest) {
+        lowest = time;
+      }
     }
-    return sum / numberOfTries;
+    return lowest;
   } catch (err) {
-    console.log("pingAveraged err:", err);
+    console.log("pingLowest err:", err);
     return undefined;
   }
 }
 
-export { ping, pingAveraged };
+export { ping, pingLowest };

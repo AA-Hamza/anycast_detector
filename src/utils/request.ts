@@ -1,3 +1,4 @@
+import https from "https";
 import http from "http";
 
 async function getHttp(options: {
@@ -6,17 +7,18 @@ async function getHttp(options: {
   timeout: number;
 }): Promise<{ success: boolean; statusCode: number; data?: object }> {
   console.log("sending getHttp:", JSON.stringify(options));
+  const module = options.url.toString().startsWith("https") ? https : http;
   const p = new Promise((resolve) => {
-    http
+    module
       .get(
         options.url,
         { timeout: options.timeout || 3000, headers: options.headers },
-        function (res) {
+        function(res) {
           let data = "";
-          res.on("data", function (chunk) {
+          res.on("data", function(chunk) {
             data += chunk;
           });
-          res.on("end", function () {
+          res.on("end", function() {
             if (res.statusCode === 200) {
               try {
                 const json = JSON.parse(data);
@@ -41,7 +43,7 @@ async function getHttp(options: {
           });
         },
       )
-      .on("error", function (err) {
+      .on("error", function(err) {
         console.log("Error:", err);
         return resolve({
           success: false,

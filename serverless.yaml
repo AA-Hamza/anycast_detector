@@ -1,24 +1,24 @@
-service: anycast-detector
-
+service: anycast
 provider:
-  name: azure
-  runtime: nodejs18
-  location: France Central
-
-plugins:
-  - serverless-azure-functions
+  name: aws
+  runtime: nodejs18.x
+  region: eu-central-1
+  memorySize: 128 # optional, in MB, default is 1024
+  timeout: 30
+  httpApi:
+    name: anycast
+    cors: true
 
 package:
-  exclude:
-    - node_modules/**
-    - .gitignore
-    - package.json
-    - .git/**
+  patterns:
+    - "!./**"
+    - ./dist/**
+    - ./node_modules/**
+    - ./package.json
 
 functions:
-  app:
-    handler: src/index
+  anycast:
+    handler: dist/serverless.handler
+    environment: ${file(env.serverless.${aws:region}.json)}
     events:
-      - http: true
-        x-azure-settings:
-          authLevel: anonymous
+      - httpApi: "*"

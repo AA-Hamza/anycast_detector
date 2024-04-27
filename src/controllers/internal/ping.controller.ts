@@ -1,5 +1,5 @@
 import { Request, Response } from "express";
-import { pingAveraged } from "../../utils/ping";
+import { pingLowest } from "../../utils/ping";
 
 async function getPingController(req: Request, res: Response) {
   if (!req.query["dest"]) {
@@ -12,7 +12,7 @@ async function getPingController(req: Request, res: Response) {
   }
 
   console.log("dest", dest);
-  const avg = await pingAveraged({ host: dest.toString(), port: port });
+  const avg = await pingLowest({ host: dest.toString(), port: port });
   console.log("avg", avg);
   if (avg) {
     return res.status(200).json({
