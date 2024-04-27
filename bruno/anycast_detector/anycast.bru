@@ -1,0 +1,22 @@
+meta {
+  name: anycast
+  type: http
+  seq: 2
+}
+
+post {
+  url: {{url}}/v1/api/anycast
+  body: json
+  auth: none
+}
+
+headers {
+  Content-Type: application/json
+}
+
+body:json {
+  {
+    "dest": "8.8.8.8",
+    "port": 53
+  }
+}

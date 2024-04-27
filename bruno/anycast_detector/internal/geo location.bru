@@ -1,0 +1,15 @@
+meta {
+  name: geo location
+  type: http
+  seq: 1
+}
+
+get {
+  url: {{url}}/v1/api/internal/geo
+  body: none
+  auth: none
+}
+
+headers {
+  x-api-key: {{api-key}}
+}
