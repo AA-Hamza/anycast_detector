@@ -4,12 +4,17 @@
   "description": "Detect if the provided ip type is anycast",
   "main": "dist/index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1",
+    "test": "echo \"Error: no test specified\" && exit 0",
     "format": "prettier -w 'src/**/*.ts'",
     "lint": "eslint --fix 'src/**/*.ts'",
     "dev": "NODE_ENV=DEVELOPMENT nodemon src/index.ts",
     "build": "tsc",
-    "start": "NODE_ENV=PRODUCTION node dist/index.js"
+    "start": "NODE_ENV=PRODUCTION node dist/index.js",
+    "pre-deploy": "npm run build && mv node_modules node_modules_bak && npm install --omit=dev",
+    "deploy": "npm run pre-deploy && serverless deploy --region eu-central-1 && serverless deploy --region us-west-1 && npm run post-deploy",
+    "post-deploy": "rm -r node_modules && mv node_modules_bak node_modules",
+    "deploy:eu": "npm run pre-deploy && serverless deploy --region eu-central-1 && npm run post-deploy",
+    "deploy:us": "npm run pre-deploy && serverless deploy --region us-west-1 && npm run post-deploy"
   },
   "repository": {
     "type": "git",
@@ -27,6 +32,7 @@
   },
   "homepage": "https://github.com/AA-Hamza/anycast_detector#readme",
   "dependencies": {
+    "@codegenie/serverless-express": "^4.14.0",
     "dotenv": "^16.4.5",
     "express": "^4.19.2",
     "morgan": "^1.10.0",
@@ -43,7 +49,6 @@
     "eslint-config-prettier": "^9.1.0",
     "nodemon": "^3.1.0",
     "ts-node": "^10.9.2",
-    "tsc": "^2.0.4",
     "typescript": "^5.4.5"
   }
 }

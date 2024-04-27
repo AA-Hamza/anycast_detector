@@ -1,3 +1,4 @@
+import https from "https";
 import http from "http";
 
 async function getHttp(options: {
@@ -6,8 +7,9 @@ async function getHttp(options: {
   timeout: number;
 }): Promise<{ success: boolean; statusCode: number; data?: object }> {
   console.log("sending getHttp:", JSON.stringify(options));
+  const module = options.url.toString().startsWith("https") ? https : http;
   const p = new Promise((resolve) => {
-    http
+    module
       .get(
         options.url,
         { timeout: options.timeout || 3000, headers: options.headers },

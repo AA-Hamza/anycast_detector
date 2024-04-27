@@ -1,11 +1,11 @@
 meta {
-  name: anycast
+  name: health
   type: http
-  seq: 2
+  seq: 3
 }
 
-post {
-  url: {{url}}/v1/api/anycast
+get {
+  url: {{url}}/v1/api/health
   body: json
   auth: none
 }
@@ -16,7 +16,7 @@ headers {
 
 body:json {
   {
-    "dest": "8.8.8.8",
+    "dest": "1.1.1.1",
     "port": 53
   }
 }

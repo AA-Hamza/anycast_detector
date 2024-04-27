@@ -1,6 +1,6 @@
 import NodeCache from "node-cache";
 import { getHttp } from "./request";
-import { AppConfig } from "..";
+import { AppConfig } from "../config";
 
 type GeoLocationResult = { lat: string; lon: string };
 const geoLocationCache = new NodeCache();

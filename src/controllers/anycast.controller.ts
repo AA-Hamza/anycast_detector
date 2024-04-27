@@ -2,7 +2,7 @@ import { Request, Response } from "express";
 import { broadCast } from "../utils/broadcast";
 import { getHttp } from "../utils/request";
 import { getTheorticalLatencyToServer } from "../utils/distance";
-import { AppConfig } from "..";
+import { AppConfig } from "../config";
 
 async function postAnyCastController(req: Request, res: Response) {
   if (!req.body["dest"]) {

@@ -1,4 +1,4 @@
-import { AppConfig } from "..";
+import { AppConfig } from "../config";
 import { getHttp } from "./request";
 
 async function broadCast(

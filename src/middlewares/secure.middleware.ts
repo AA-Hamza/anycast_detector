@@ -1,5 +1,5 @@
 import { NextFunction, Request, Response } from "express";
-import { AppConfig } from "..";
+import { AppConfig } from "../config";
 
 async function secureEndpointMiddleware(
   req: Request,
