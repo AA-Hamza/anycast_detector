@@ -53,7 +53,7 @@ async function postAnyCastController(req: Request, res: Response) {
   const detailsArray: {
     this: number;
     remote: number;
-    theorticalThisToRemote: number;
+    theortical_latency: number;
   }[] = [];
   for (const result of results) {
     if (result.server.toString() == AppConfig.thisServer.toString()) {
@@ -78,7 +78,7 @@ async function postAnyCastController(req: Request, res: Response) {
         detailsArray.push({
           this: thisServerLatencyAvg,
           remote: remoteLatencyAvg,
-          theorticalThisToRemote: theorticalLatencyToRemoteServer,
+          theortical_latency: theorticalLatencyToRemoteServer,
         });
         if (
           remoteLatencyAvg + thisServerLatencyAvg <
@@ -88,6 +88,7 @@ async function postAnyCastController(req: Request, res: Response) {
             success: true,
             result: {
               dest: dest,
+              port: port,
               anycast: true,
               details: detailsArray,
             },
@@ -114,6 +115,7 @@ async function postAnyCastController(req: Request, res: Response) {
     success: true,
     result: {
       dest: dest,
+      port: port,
       anycast: false,
       details: detailsArray,
     },
