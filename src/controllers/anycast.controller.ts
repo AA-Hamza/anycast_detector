@@ -88,6 +88,7 @@ async function postAnyCastController(req: Request, res: Response) {
             success: true,
             result: {
               dest: dest,
+              port: port,
               anycast: true,
               details: detailsArray,
             },
@@ -114,6 +115,7 @@ async function postAnyCastController(req: Request, res: Response) {
     success: true,
     result: {
       dest: dest,
+      port: port,
       anycast: false,
       details: detailsArray,
     },
