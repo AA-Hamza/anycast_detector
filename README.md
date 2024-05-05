@@ -48,6 +48,7 @@ npm run dev
 ```
 
 I am using aws lambda (serverless) for deployment. you can use the serverless.yaml (serverless framework) to deploy your own versions
+That is why I am using tcp ping instead of regular ICMP
 
 example .env
 
@@ -75,5 +76,10 @@ Then each node exposes a simple api call publicly to detect anycasts.
 1. the hit node calls other nodes to get their geo location (cached)
 2. Broadcast the ping request to available nodes (including itself)
 3. Wait for coming latency results. If any node latency beats the speed of light, the call returns.
+
+### What happens when I enter a domain name instead of an IP address
+
+First of all, cool.
+The tool will work however the result may be incorrect because the domain name is likely using [DNS loadbalancing](https://www.cloudflare.com/learning/performance/what-is-dns-load-balancing/)
 
 ![Untitled-2024-03-09-2010](https://github.com/AA-Hamza/anycast_detector/assets/33000142/63e7e0bc-e351-4928-8485-9a160cb9061d)
